@@ -1,7 +1,7 @@
 # WMSegmentControl
 Custom segment control for iOS
 
-![WMSegment screenshot](https://ibb.co/7nDcrGC)
+![](https://github.com/malekwasim/WMSegmentControl/blob/master/Screenshots/screenshot.png)
 
 ### Usage
 Using WMSegment control is easy
