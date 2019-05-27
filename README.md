@@ -1,18 +1,18 @@
 # WMSegmentControl
-##Custom segment control for iOS
+Custom segment control for iOS
 
 ![WMSegment screenshot](https://ibb.co/7nDcrGC)
 
 ### Usage
 Using WMSegment control is easy
 
-```
 With Storybord
+```
 Drag a UIView and change its class to WMSegment.
 now you can set the properties as per your requirements.
 ```
-```
 Programatically
+```
 let anotherSegment = WMSegment(frame: frame)
 anotherSegment.type = .normal // normal (Default),imageOnTop, onlyImage
 anotherSegment.selectorType = .bottomBar //normal (Default), bottomBar
@@ -32,7 +32,7 @@ anotherSegment.SelectedFont = UIFont(name: "ChalkboardSE-Bold", size: 15)!
 anotherSegment.normalFont = UIFont(name: "ChalkboardSE-Regular", size: 15)!
 self.view.addSubview(anotherSegment)
 ```
-### Installing
+### Installation
 Using CocoaPods
 
 ```
