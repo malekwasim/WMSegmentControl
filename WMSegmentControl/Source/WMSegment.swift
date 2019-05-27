@@ -103,6 +103,7 @@ public class WMSegment: UIControl {
     }
     
     func updateView() {
+        self.clipsToBounds = true
         buttons.removeAll()
         subviews.forEach({$0.removeFromSuperview()})
         let titles = buttonTitles.components(separatedBy: ",")
