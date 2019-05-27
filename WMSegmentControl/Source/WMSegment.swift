@@ -14,74 +14,74 @@ public class WMSegment: UIControl {
     var selector: UIView!
     var selectedSegmentIndex: Int = 0
     
-    var type: SegementType = .normal {
+   public var type: SegementType = .normal {
         didSet {
             updateView()
         }
     }
     
-    var selectorType: selectorType = .normal {
+    public var selectorType: selectorType = .normal {
         didSet {
             updateView()
         }
     }
     
     @IBInspectable
-    var borderWidth: CGFloat = 0 {
+    public var borderWidth: CGFloat = 0 {
         didSet {
             layer.borderWidth = borderWidth
         }
     }
     
     @IBInspectable
-    var borderColor: UIColor = .clear {
+    public var borderColor: UIColor = .clear {
         didSet {
             layer.borderColor = borderColor.cgColor
         }
     }
     
     @IBInspectable
-    var cornerRadius: CGFloat = 0 {
+    public var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
         }
     }
     @IBInspectable
-    var buttonTitles: String = ""{
+    public var buttonTitles: String = ""{
         didSet {
             updateView()
         }
     }
     
     @IBInspectable
-    var buttonImages: String = ""{
+    public var buttonImages: String = ""{
         didSet {
             updateView()
         }
     }
     
     @IBInspectable
-    var textColor: UIColor = .lightGray {
+    public var textColor: UIColor = .lightGray {
         didSet {
             updateView()
         }
     }
     
     @IBInspectable
-    var selectorTextColor: UIColor = .white {
+    public var selectorTextColor: UIColor = .white {
         didSet {
             updateView()
         }
     }
     @IBInspectable
-    var selectorColor: UIColor = .darkGray {
+    public var selectorColor: UIColor = .darkGray {
         didSet {
             updateView()
         }
     }
     
     @IBInspectable
-    var isRounded: Bool = false {
+    public var isRounded: Bool = false {
         didSet {
             if self.isRounded == true {
                 layer.cornerRadius = frame.height/2
@@ -90,13 +90,13 @@ public class WMSegment: UIControl {
         }
     }
     
-    var normalFont : UIFont = UIFont.systemFont(ofSize: 15) {
+    public var normalFont : UIFont = UIFont.systemFont(ofSize: 15) {
         didSet {
             updateView()
         }
     }
     
-    var SelectedFont : UIFont = UIFont.systemFont(ofSize: 15) {
+    public var SelectedFont : UIFont = UIFont.systemFont(ofSize: 15) {
         didSet {
             updateView()
         }
@@ -260,11 +260,11 @@ extension UIButton {
     }
 }
 
-enum SegementType: Int {
+public enum SegementType: Int {
     case normal = 0, imageOnTop, onlyImage
 }
 
-enum selectorType: Int {
+public enum selectorType: Int {
     case normal = 0, bottomBar
 }
 
