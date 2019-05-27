@@ -106,24 +106,44 @@ public class WMSegment: UIControl {
         self.clipsToBounds = true
         buttons.removeAll()
         subviews.forEach({$0.removeFromSuperview()})
-        let titles = buttonTitles.components(separatedBy: ",")
-        let images = buttonImages.components(separatedBy: ",")
-        var selectorWidth = frame.width / CGFloat(titles.count)
+        
         if self.type == .normal {
             buttons = getButtonsForNormalSegment()
         }  else if self.type == .imageOnTop {
             buttons = getButtonsForNormalSegment(true)
         } else if self.type == .onlyImage {
             buttons = getButtonsForOnlyImageSegment()
-            selectorWidth = frame.width / CGFloat(images.count)
         }
-        
         
         if selectedSegmentIndex < buttons.count {
             buttons[selectedSegmentIndex].tintColor = selectorTextColor
             buttons[selectedSegmentIndex].setTitleColor(selectorTextColor, for: .normal)
             buttons[selectedSegmentIndex].titleLabel?.font = SelectedFont
         }
+        setupSelector()
+        addSubview(selector)
+        let sv = UIStackView(arrangedSubviews: buttons)
+        sv.axis = .horizontal
+        sv.alignment = .fill
+        sv.distribution = .fillEqually//.fillProportionally
+        addSubview(sv)
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        
+        sv.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        sv.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        sv.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        sv.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+    }
+    
+    func setupSelector() {
+        
+        let titles = buttonTitles.components(separatedBy: ",")
+        let images = buttonImages.components(separatedBy: ",")
+        var selectorWidth = frame.width / CGFloat(titles.count)
+        if self.type == .onlyImage {
+            selectorWidth = frame.width / CGFloat(images.count)
+        }
+        
         
         if selectorType == .normal {
             selector = UIView(frame: CGRect(x: 0, y: 0, width: selectorWidth, height: frame.height))
@@ -138,21 +158,7 @@ public class WMSegment: UIControl {
         }
         
         selector.backgroundColor = selectorColor
-        addSubview(selector)
-        let sv = UIStackView(arrangedSubviews: buttons)
-        sv.axis = .horizontal
-        sv.alignment = .fill
-        sv.distribution = .fillEqually//.fillProportionally
-        addSubview(sv)
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        
-        sv.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        sv.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        sv.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        sv.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        
     }
-    
     //MARK : Get Button as per segment type
     func getButtonsForNormalSegment(_ isImageTop: Bool = false) -> [UIButton] {
         var btn = [UIButton]()
@@ -199,7 +205,11 @@ public class WMSegment: UIControl {
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override public func draw(_ rect: CGRect) {
-        //layer.cornerRadius = frame.height/2
+        super.draw(rect)
+    }
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        updateView()
     }
     
     @objc func buttonTapped(_ sender: UIButton) {
