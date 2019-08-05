@@ -12,7 +12,7 @@ public class WMSegment: UIControl {
     
     var buttons = [UIButton]()
     var selector: UIView!
-    var selectedSegmentIndex: Int = 0
+    public var selectedSegmentIndex: Int = 0
     
    public var type: SegementType = .normal {
         didSet {
