@@ -35,7 +35,7 @@ class SegmentViewController: UITableViewController {
         case 1:
             print("second item")
         case 2:
-            print("second item")
+            print("Third item")
         default:
             print("default item")
         }
