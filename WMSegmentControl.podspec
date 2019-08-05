@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'WMSegmentControl'
-  s.version          = '0.1.5'
+  s.version          = '0.1.6'
   s.summary          = 'Custom segment control for iOS'
  
   s.description      = <<-DESC
@@ -12,7 +12,7 @@ Custom segment control for iOS. Create a stylish segment control for you app.
   s.author           = { 'Wasim' => 'Wasim.malek.009@gmail.com' }
   s.source           = { :git => 'https://github.com/malekwasim/WMSegmentControl.git', :tag => s.version.to_s }
  
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '9.0'
   s.source_files = 'WMSegmentControl/Source/*.swift'
   s.swift_version = "4.2"
  

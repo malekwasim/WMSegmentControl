@@ -175,12 +175,15 @@ public class WMSegment: UIControl {
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
             btn.append(button)
             if index < images.count {
-                button.setImage(UIImage(named: images[index]), for: .normal)
-                if isImageTop == false {
-                    button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-                } else {
-                    button.centerImageAndButton(5, imageOnTop: true)
+                if images[index] != ""{
+                    button.setImage(UIImage(named: images[index]), for: .normal)
+                    if isImageTop == false {
+                        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+                    } else {
+                        button.centerImageAndButton(5, imageOnTop: true)
+                    }
                 }
+                
                 
             }
         }
