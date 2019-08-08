@@ -8,19 +8,19 @@
 
 import UIKit
 @IBDesignable
-public class WMSegment: UIControl {
+public class WMSegmentControl: UIControl {
     
     var buttons = [UIButton]()
     var selector: UIView!
     public var selectedSegmentIndex: Int = 0
     
-   public var type: SegementType = .normal {
+    public var type: SegementType = .normal {
         didSet {
             updateView()
         }
     }
     
-    public var selectorType: selectorType = .normal {
+    public var selectorType: SelectorType = .normal {
         didSet {
             updateView()
         }
@@ -102,6 +102,8 @@ public class WMSegment: UIControl {
         }
     }
     
+    public var animate: Bool = true
+    
     func updateView() {
         self.clipsToBounds = true
         buttons.removeAll()
@@ -159,6 +161,7 @@ public class WMSegment: UIControl {
         
         selector.backgroundColor = selectorColor
     }
+    
     //MARK : Get Button as per segment type
     func getButtonsForNormalSegment(_ isImageTop: Bool = false) -> [UIButton] {
         var btn = [UIButton]()
@@ -205,14 +208,14 @@ public class WMSegment: UIControl {
         }
         return btn
     }
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override public func draw(_ rect: CGRect) {
-        super.draw(rect)
-    }
+    
     public override func layoutSubviews() {
         super.layoutSubviews()
         updateView()
+        let _animated = self.animate
+        self.animate = false
+        setSelectedIndex(self.selectedSegmentIndex)
+        self.animate = _animated
     }
     
     @objc func buttonTapped(_ sender: UIButton) {
@@ -224,7 +227,11 @@ public class WMSegment: UIControl {
             if btn == sender {
                 selectedSegmentIndex = buttonIndex
                 let startPosition = frame.width/CGFloat(buttons.count) * CGFloat(buttonIndex)
-                UIView.animate(withDuration: 0.3) {
+                if self.animate {
+                    UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+                        self.selector.frame.origin.x = startPosition
+                    }, completion: nil)
+                }else{
                     self.selector.frame.origin.x = startPosition
                 }
                 btn.titleLabel?.font = SelectedFont
@@ -244,9 +251,14 @@ public class WMSegment: UIControl {
             if btn.tag == index {
                 selectedSegmentIndex = buttonIndex
                 let startPosition = frame.width/CGFloat(buttons.count) * CGFloat(buttonIndex)
-                UIView.animate(withDuration: 0.3) {
+                if self.animate {
+                    UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+                        self.selector.frame.origin.x = startPosition
+                    }, completion: nil)
+                }else{
                     self.selector.frame.origin.x = startPosition
                 }
+                
                 btn.tintColor = selectorTextColor
                 btn.setTitleColor(selectorTextColor, for: .normal)
             }
@@ -258,9 +270,8 @@ public class WMSegment: UIControl {
     }
     
 }
+
 extension UIButton {
-    
-    
     func centerImageAndButton(_ gap: CGFloat, imageOnTop: Bool) {
         
         guard let imageView = self.currentImage,
@@ -278,7 +289,7 @@ public enum SegementType: Int {
     case normal = 0, imageOnTop, onlyImage
 }
 
-public enum selectorType: Int {
+public enum SelectorType: Int {
     case normal = 0, bottomBar
 }
 
