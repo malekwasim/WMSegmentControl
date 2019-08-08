@@ -8,7 +8,7 @@
 
 import UIKit
 @IBDesignable
-public class WMSegmentControl: UIControl {
+public class WMSegment: UIControl {
     
     var buttons = [UIButton]()
     var selector: UIView!
