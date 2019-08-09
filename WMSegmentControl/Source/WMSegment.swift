@@ -243,7 +243,7 @@ public class WMSegment: UIControl {
         sendActions(for: .valueChanged)
     }
     
-    func setSelectedIndex(_ index: Int) {
+    public func setSelectedIndex(_ index: Int) {
         for (buttonIndex, btn) in buttons.enumerated() {
             btn.tintColor = textColor
             btn.setTitleColor(textColor, for: .normal)
@@ -265,7 +265,7 @@ public class WMSegment: UIControl {
         }
     }
     
-    func changeSelectedColor(_ color: UIColor) {
+    public func changeSelectedColor(_ color: UIColor) {
         self.selector.backgroundColor = color
     }
     
