@@ -8,7 +8,7 @@
 
 import UIKit
 @IBDesignable
-public class WMSegment: UIControl {
+open class WMSegment: UIControl {
     
     var buttons = [UIButton]()
     var selector: UIView!
@@ -209,7 +209,7 @@ public class WMSegment: UIControl {
         return btn
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         updateView()
         let _animated = self.animate
@@ -243,7 +243,7 @@ public class WMSegment: UIControl {
         sendActions(for: .valueChanged)
     }
     //MARK: set Selected Index
-    public func setSelectedIndex(_ index: Int) {
+    open func setSelectedIndex(_ index: Int) {
         for (buttonIndex, btn) in buttons.enumerated() {
             btn.tintColor = textColor
             btn.setTitleColor(textColor, for: .normal)
@@ -266,7 +266,7 @@ public class WMSegment: UIControl {
     }
     
     //MARK: chage Selector Color
-    public func changeSelectedColor(_ color: UIColor) {
+    open func changeSelectedColor(_ color: UIColor) {
         self.selector.backgroundColor = color
     }
     
