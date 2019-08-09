@@ -271,7 +271,7 @@ open class WMSegment: UIControl {
     }
     
 }
-
+//MARK: UIbutton Extesion
 extension UIButton {
     func centerImageAndButton(_ gap: CGFloat, imageOnTop: Bool) {
         
@@ -285,7 +285,7 @@ extension UIButton {
         self.imageEdgeInsets = UIEdgeInsets(top: -(titleSize.height + gap) * sign, left: 0, bottom: 0, right: -titleSize.width)
     }
 }
-
+//MARK: Enums
 public enum SegementType: Int {
     case normal = 0, imageOnTop, onlyImage
 }
