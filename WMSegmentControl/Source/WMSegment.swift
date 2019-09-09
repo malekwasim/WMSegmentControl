@@ -90,6 +90,13 @@ open class WMSegment: UIControl {
         }
     }
     
+    @IBInspectable
+    public var bottomBarHeight : CGFloat = 5.0 {
+        didSet {
+            updateView()
+        }
+    }
+    
     public var normalFont : UIFont = UIFont.systemFont(ofSize: 15) {
         didSet {
             updateView()
@@ -155,7 +162,7 @@ open class WMSegment: UIControl {
                 selector.layer.cornerRadius = 0
             }
         } else if selectorType == .bottomBar {
-            selector = UIView(frame: CGRect(x: 0, y: frame.height - 5, width: selectorWidth, height: 5))
+            selector = UIView(frame: CGRect(x: 0, y: frame.height - bottomBarHeight, width: selectorWidth, height: bottomBarHeight))
             selector.layer.cornerRadius = 0
         }
         
