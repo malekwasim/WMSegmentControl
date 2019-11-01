@@ -9,7 +9,7 @@
 import UIKit
 @IBDesignable
 open class WMSegment: UIControl {
-    
+    var onValueChanged: ((_ index: Int)->())?
     var buttons = [UIButton]()
     var selector: UIView!
     public var selectedSegmentIndex: Int = 0
@@ -246,7 +246,7 @@ open class WMSegment: UIControl {
                 btn.setTitleColor(selectorTextColor, for: .normal)
             }
         }
-        
+        onValueChanged?(selectedSegmentIndex)
         sendActions(for: .valueChanged)
     }
     //MARK: set Selected Index
