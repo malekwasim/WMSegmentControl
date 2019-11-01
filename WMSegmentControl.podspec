@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'WMSegmentControl'
-  s.version          = '0.1.13'
+  s.version          = '0.1.15'
   s.summary          = 'Custom segment control for iOS'
  
   s.description      = <<-DESC

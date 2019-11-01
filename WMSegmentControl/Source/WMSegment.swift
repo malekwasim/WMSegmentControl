@@ -9,7 +9,7 @@
 import UIKit
 @IBDesignable
 open class WMSegment: UIControl {
-    var onValueChanged: ((_ index: Int)->())?
+    public var onValueChanged: ((_ index: Int)->())?
     var buttons = [UIButton]()
     var selector: UIView!
     public var selectedSegmentIndex: Int = 0
