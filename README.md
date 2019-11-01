@@ -31,6 +31,11 @@ anotherSegment.SelectedFont = UIFont(name: "ChalkboardSE-Bold", size: 15)!
 // set font for segment options
 anotherSegment.normalFont = UIFont(name: "ChalkboardSE-Regular", size: 15)!
 self.view.addSubview(anotherSegment)
+
+// Using callbacks you can get the selected index
+anotherSegment.onValueChanged = { index in
+            print("I have selected index \(index) from WMSegment")
+        }
 ```
 ### Installation
 Using CocoaPods
