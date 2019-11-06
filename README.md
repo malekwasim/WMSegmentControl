@@ -17,7 +17,7 @@ let anotherSegment = WMSegment(frame: frame)
 anotherSegment.type = .normal // normal (Default),imageOnTop, onlyImage
 anotherSegment.selectorType = .bottomBar //normal (Default), bottomBar
 // If you want round selector 
-anotherSegment.isRounded = true //By default flase
+anotherSegment.isRounded = true //By default false
 //Set titles of your segment
 anotherSegment.buttonTitles = "Apple,Google,Facebook"
 // set text color for non - selected segment values
