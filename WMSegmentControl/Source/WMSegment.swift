@@ -59,6 +59,13 @@ open class WMSegment: UIControl {
             updateView()
         }
     }
+
+    @IBInspectable
+    public var buttonSelectedImages: String = ""{
+        didSet {
+            updateView()
+        }
+    }
     
     @IBInspectable
     public var textColor: UIColor = .lightGray {
@@ -125,7 +132,9 @@ open class WMSegment: UIControl {
         }
         
         if selectedSegmentIndex < buttons.count {
-            buttons[selectedSegmentIndex].tintColor = selectorTextColor
+            if buttonSelectedImages.count == 0 {
+                buttons[selectedSegmentIndex].tintColor = selectorTextColor
+            }
             buttons[selectedSegmentIndex].setTitleColor(selectorTextColor, for: .normal)
             buttons[selectedSegmentIndex].titleLabel?.font = SelectedFont
         }
@@ -153,7 +162,6 @@ open class WMSegment: UIControl {
             selectorWidth = frame.width / CGFloat(images.count)
         }
         
-        
         if selectorType == .normal {
             selector = UIView(frame: CGRect(x: 0, y: 0, width: selectorWidth, height: frame.height))
             if isRounded {
@@ -178,7 +186,9 @@ open class WMSegment: UIControl {
             let button = UIButton(type: .system)
             button.setTitle(buttonTitle, for: .normal)
             button.tag = index
-            button.tintColor = textColor
+            if buttonSelectedImages.count == 0 {
+                button.tintColor = textColor
+            }
             button.setTitleColor(textColor, for: .normal)
             button.titleLabel?.font = normalFont
             button.titleLabel?.textAlignment = .center
@@ -187,14 +197,15 @@ open class WMSegment: UIControl {
             if index < images.count {
                 if images[index] != ""{
                     button.setImage(UIImage(named: images[index]), for: .normal)
+                    if buttonSelectedImages.count != 0 {
+                        button.setImage(UIImage(named: images[index])?.withRenderingMode(.alwaysOriginal), for: .normal)
+                    }
                     if isImageTop == false {
                         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
                     } else {
                         button.centerImageAndButton(5, imageOnTop: true)
                     }
                 }
-                
-                
             }
         }
         
@@ -207,8 +218,13 @@ open class WMSegment: UIControl {
         for (index, buttonImage) in images.enumerated() {
             let button = UIButton(type: .system)
             button.setImage(UIImage(named: buttonImage), for: .normal)
+            if buttonSelectedImages.count != 0 {
+                button.setImage(UIImage(named: buttonImage)?.withRenderingMode(.alwaysOriginal), for: .normal)
+            }
             button.tag = index
-            button.tintColor = textColor
+            if buttonSelectedImages.count == 0 {
+                button.tintColor = textColor
+            }
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
             btn.append(button)
             
@@ -226,9 +242,12 @@ open class WMSegment: UIControl {
     }
     
     @objc func buttonTapped(_ sender: UIButton) {
-        
+        let images = buttonImages.components(separatedBy: ",")
+        let selectedImages = buttonSelectedImages.components(separatedBy: ",")
         for (buttonIndex, btn) in buttons.enumerated() {
-            btn.tintColor = textColor
+            if buttonSelectedImages.count == 0 {
+                btn.tintColor = textColor
+            }
             btn.setTitleColor(textColor, for: .normal)
             btn.titleLabel?.font = normalFont
             if btn == sender {
@@ -242,9 +261,21 @@ open class WMSegment: UIControl {
                     self.selector.frame.origin.x = startPosition
                 }
                 btn.titleLabel?.font = SelectedFont
-                btn.tintColor = selectorTextColor
+                if buttonSelectedImages.count == 0 {
+                    btn.tintColor = selectorTextColor
+                }
                 btn.setTitleColor(selectorTextColor, for: .normal)
             }
+            if buttonIndex < images.count && images[buttonIndex] != ""{
+                btn.setImage(UIImage(named: images[buttonIndex]), for: .normal)
+                if buttonSelectedImages.count != 0 {
+                    btn.setImage(UIImage(named: images[buttonIndex])?.withRenderingMode(.alwaysOriginal), for: .normal)
+                }
+            }
+        }
+        if selectedSegmentIndex < selectedImages.count && selectedImages[selectedSegmentIndex] != "" {
+            let img = UIImage(named: selectedImages[selectedSegmentIndex])?.withRenderingMode(.alwaysOriginal)
+            buttons[selectedSegmentIndex].setImage(img, for: .normal)
         }
         onValueChanged?(selectedSegmentIndex)
         sendActions(for: .valueChanged)
@@ -252,7 +283,9 @@ open class WMSegment: UIControl {
     //MARK: set Selected Index
     open func setSelectedIndex(_ index: Int) {
         for (buttonIndex, btn) in buttons.enumerated() {
-            btn.tintColor = textColor
+            if buttonSelectedImages.count == 0 {
+                btn.tintColor = textColor
+            }
             btn.setTitleColor(textColor, for: .normal)
             
             if btn.tag == index {
@@ -265,10 +298,16 @@ open class WMSegment: UIControl {
                 }else{
                     self.selector.frame.origin.x = startPosition
                 }
-                
-                btn.tintColor = selectorTextColor
+                if buttonSelectedImages.count == 0 {
+                    btn.tintColor = selectorTextColor
+                }
                 btn.setTitleColor(selectorTextColor, for: .normal)
             }
+        }
+        let selectedImages = buttonSelectedImages.components(separatedBy: ",")
+        if selectedSegmentIndex < selectedImages.count && selectedImages[selectedSegmentIndex] != "" {
+            let img = UIImage(named: selectedImages[selectedSegmentIndex])?.withRenderingMode(.alwaysOriginal)
+            buttons[selectedSegmentIndex].setImage(img, for: .normal)
         }
     }
     
@@ -278,7 +317,8 @@ open class WMSegment: UIControl {
     }
     
 }
-//MARK: UIbutton Extesion
+
+//MARK: UIButton Extension
 extension UIButton {
     func centerImageAndButton(_ gap: CGFloat, imageOnTop: Bool) {
         
@@ -292,6 +332,7 @@ extension UIButton {
         self.imageEdgeInsets = UIEdgeInsets(top: -(titleSize.height + gap) * sign, left: 0, bottom: 0, right: -titleSize.width)
     }
 }
+
 //MARK: Enums
 public enum SegementType: Int {
     case normal = 0, imageOnTop, onlyImage
@@ -300,4 +341,3 @@ public enum SegementType: Int {
 public enum SelectorType: Int {
     case normal = 0, bottomBar
 }
-

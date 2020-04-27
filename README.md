@@ -20,6 +20,11 @@ anotherSegment.selectorType = .bottomBar //normal (Default), bottomBar
 anotherSegment.isRounded = true //By default false
 //Set titles of your segment
 anotherSegment.buttonTitles = "Apple,Google,Facebook"
+//Set images 
+anotherSegment.buttonImages = "apple_light,google_light,facebook_light"
+//Set selected images 
+anotherSegment.buttonSelectedImages = "apple_dark,google_dark,facebook_dark"
+
 // set text color for non - selected segment values
 anotherSegment.textColor = .black
 // set text color for selected segment value
