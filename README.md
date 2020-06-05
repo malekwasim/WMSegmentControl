@@ -3,7 +3,7 @@ Custom segment control for iOS
 
 ![](https://github.com/malekwasim/WMSegmentControl/blob/master/Screenshots/screenshot.png)
 
-### Detail informatio with screen
+### Detail information with screen
 https://elearningswift.com/custom-segment-control-for-ios-wmsegmentcontrol/
 ### Usage
 Using WMSegment control is easy
