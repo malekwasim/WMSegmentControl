@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A5D0A7624A3111C005EC9A4 /* WMSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5D0A7524A3111C005EC9A4 /* WMSegmentView.swift */; };
+		9A5D0A7824A3112D005EC9A4 /* WMSegmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A5D0A7724A3112D005EC9A4 /* WMSegmentView.xib */; };
 		9FCA69FA229BB70300181099 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA69F9229BB70300181099 /* AppDelegate.swift */; };
 		9FCA69FC229BB70300181099 /* SegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA69FB229BB70300181099 /* SegmentViewController.swift */; };
 		9FCA69FF229BB70300181099 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FCA69FD229BB70300181099 /* Main.storyboard */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9A5D0A7524A3111C005EC9A4 /* WMSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WMSegmentView.swift; sourceTree = "<group>"; };
+		9A5D0A7724A3112D005EC9A4 /* WMSegmentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WMSegmentView.xib; sourceTree = "<group>"; };
 		9FCA69F6229BB70300181099 /* WMSegmentControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WMSegmentControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FCA69F9229BB70300181099 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FCA69FB229BB70300181099 /* SegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +75,8 @@
 			isa = PBXGroup;
 			children = (
 				9FCA6A0C229BB75300181099 /* WMSegment.swift */,
+				9A5D0A7524A3111C005EC9A4 /* WMSegmentView.swift */,
+				9A5D0A7724A3112D005EC9A4 /* WMSegmentView.xib */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -133,6 +139,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A5D0A7824A3112D005EC9A4 /* WMSegmentView.xib in Resources */,
 				9FCA6A04229BB70600181099 /* LaunchScreen.storyboard in Resources */,
 				9FCA6A01229BB70600181099 /* Assets.xcassets in Resources */,
 				9FCA69FF229BB70300181099 /* Main.storyboard in Resources */,
@@ -146,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A5D0A7624A3111C005EC9A4 /* WMSegmentView.swift in Sources */,
 				9FCA69FC229BB70300181099 /* SegmentViewController.swift in Sources */,
 				9FCA6A0D229BB75300181099 /* WMSegment.swift in Sources */,
 				9FCA69FA229BB70300181099 /* AppDelegate.swift in Sources */,

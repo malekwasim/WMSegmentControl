@@ -11,7 +11,7 @@ import UIKit
 open class WMSegment: UIControl {
 
     public var onValueChanged: ((_ index: Int)->())?
-    var buttons = [UIButton]()
+    var buttons = [WMSegmentView]()
     var selector: UIView!
     public var selectedSegmentIndex: Int = 0
 
@@ -177,11 +177,12 @@ open class WMSegment: UIControl {
 
         if selectedSegmentIndex < buttons.count {
             if buttonSelectedImages.count == 0 {
-                buttons[selectedSegmentIndex].tintColor = selectorTextColor
+                buttons[selectedSegmentIndex].setTint(selectorTextColor)
             }
-            buttons[selectedSegmentIndex].setTitleColor(selectorTextColor, for: .normal)
-            buttons[selectedSegmentIndex].titleLabel?.font = SelectedFont
+            buttons[selectedSegmentIndex].setTitleColor(selectorTextColor)
+            buttons[selectedSegmentIndex].setTitleFont(SelectedFont)
         }
+       
         setupSelector()
         addSubview(selector)
         let sv = UIStackView(arrangedSubviews: buttons)
@@ -227,32 +228,31 @@ open class WMSegment: UIControl {
     }
 
     //MARK : Get Button as per segment type
-    func getButtonsForNormalSegment(_ isImageTop: Bool = false) -> [UIButton] {
-        var btn = [UIButton]()
+    func getButtonsForNormalSegment(_ isImageTop: Bool = false) -> [WMSegmentView] {
+        var btn = [WMSegmentView]()
         let titles = buttonTitles.components(separatedBy: ",")
         let images = buttonImages.components(separatedBy: ",")
         for (index, buttonTitle) in titles.enumerated() {
-            let button = UIButton(type: .system)
-            button.setTitle(buttonTitle, for: .normal)
-            button.tag = index
+            let segmentView = WMSegmentView()//UIButton(type: .system)
+            segmentView.setTitle(buttonTitle)
+            segmentView.btnTitle.tag = index
             if buttonSelectedImages.count == 0 {
-                button.tintColor = textColor
+                segmentView.setTint(textColor)
             }
-            button.setTitleColor(textColor, for: .normal)
-            button.titleLabel?.font = normalFont
-            button.titleLabel?.textAlignment = .center
-            button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
-            btn.append(button)
+            segmentView.setTitleColor(textColor)
+            segmentView.setTitleFont(normalFont)
+            segmentView.btnTitle.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+            btn.append(segmentView)
             if index < images.count {
                 if images[index] != ""{
-                    button.setImage(UIImage(named: images[index], in: bundle, compatibleWith: nil), for: .normal)
+                    segmentView.setImage(UIImage(named: images[index], in: bundle, compatibleWith: nil))
                     if buttonSelectedImages.count != 0 {
-                        button.setImage(UIImage(named: images[index], in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysOriginal), for: .normal)
+                        segmentView.setImage(UIImage(named: images[index], in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysOriginal))
                     }
                     if isImageTop == false {
-                        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+                        segmentView.btnTitle.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
                     } else {
-                        button.centerImageAndButton(5, imageOnTop: true)
+                        segmentView.makeImageCenter()
                     }
                 }
             }
@@ -261,21 +261,21 @@ open class WMSegment: UIControl {
         return btn
     }
 
-    func getButtonsForOnlyImageSegment() -> [UIButton] {
-        var btn = [UIButton]()
+    func getButtonsForOnlyImageSegment() -> [WMSegmentView] {
+        var btn = [WMSegmentView]()
         let images = buttonImages.components(separatedBy: ",")
         for (index, buttonImage) in images.enumerated() {
-            let button = UIButton(type: .system)
-            button.setImage(UIImage(named: buttonImage, in: bundle, compatibleWith: nil), for: .normal)
+            let segmentView = WMSegmentView()//UIButton(type: .system)
+            segmentView.setImage(UIImage(named: buttonImage, in: bundle, compatibleWith: nil))
             if buttonSelectedImages.count != 0 {
-                button.setImage(UIImage(named: buttonImage, in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysOriginal), for: .normal)
+                segmentView.setImage(UIImage(named: buttonImage, in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysOriginal))
             }
-            button.tag = index
+            segmentView.btnTitle.tag = index
             if buttonSelectedImages.count == 0 {
-                button.tintColor = textColor
+                segmentView.setTint(textColor)
             }
-            button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
-            btn.append(button)
+            segmentView.btnTitle.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+            btn.append(segmentView)
 
         }
         return btn
@@ -293,13 +293,14 @@ open class WMSegment: UIControl {
     @objc func buttonTapped(_ sender: UIButton) {
         let images = buttonImages.components(separatedBy: ",")
         let selectedImages = buttonSelectedImages.components(separatedBy: ",")
-        for (buttonIndex, btn) in buttons.enumerated() {
+        for (buttonIndex, viewSegment) in buttons.enumerated() {
             if buttonSelectedImages.count == 0 {
-                btn.tintColor = textColor
+                viewSegment.setTint(textColor)
             }
-            btn.setTitleColor(textColor, for: .normal)
-            btn.titleLabel?.font = normalFont
-            if btn == sender {
+            viewSegment.setTitleColor(textColor)
+            viewSegment.setTitleFont(normalFont)
+            
+            if viewSegment.btnTitle == sender {
                 selectedSegmentIndex = buttonIndex
                 let startPosition = frame.width/CGFloat(buttons.count) * CGFloat(buttonIndex)
                 if self.animate {
@@ -309,36 +310,38 @@ open class WMSegment: UIControl {
                 }else{
                     self.selector.frame.origin.x = startPosition
                 }
-                btn.titleLabel?.font = SelectedFont
+                viewSegment.setTitleFont(SelectedFont)
+                
                 if buttonSelectedImages.count == 0 {
-                    btn.tintColor = selectorTextColor
+                    viewSegment.setTint(selectorTextColor)
                 }
-                btn.setTitleColor(selectorTextColor, for: .normal)
+                viewSegment.setTitleColor(selectorTextColor)
+                
             }
             if buttonIndex < images.count && images[buttonIndex] != ""{
-                btn.setImage(UIImage(named: images[buttonIndex], in: bundle, compatibleWith: nil), for: .normal)
+                viewSegment.setImage(UIImage(named: images[buttonIndex], in: bundle, compatibleWith: nil))
                 if buttonSelectedImages.count != 0 {
-                    btn.setImage(UIImage(named: images[buttonIndex], in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysOriginal), for: .normal)
+                    viewSegment.setImage(UIImage(named: images[buttonIndex], in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysOriginal))
                 }
             }
         }
 
         if selectedSegmentIndex < selectedImages.count && selectedImages[selectedSegmentIndex] != "" {
             let img = UIImage(named: selectedImages[selectedSegmentIndex], in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysOriginal)
-            buttons[selectedSegmentIndex].setImage(img, for: .normal)
+            buttons[selectedSegmentIndex].setImage(img)
         }
         onValueChanged?(selectedSegmentIndex)
         sendActions(for: .valueChanged)
     }
     //MARK: set Selected Index
     open func setSelectedIndex(_ index: Int) {
-        for (buttonIndex, btn) in buttons.enumerated() {
+        for (buttonIndex, viewSegment) in buttons.enumerated() {
             if buttonSelectedImages.count == 0 {
-                btn.tintColor = textColor
+                viewSegment.setTint(textColor)
             }
-            btn.setTitleColor(textColor, for: .normal)
+            viewSegment.setTitleColor(textColor)
 
-            if btn.tag == index {
+            if viewSegment.tag == index {
                 selectedSegmentIndex = buttonIndex
                 let startPosition = frame.width/CGFloat(buttons.count) * CGFloat(buttonIndex)
                 if self.animate {
@@ -349,15 +352,15 @@ open class WMSegment: UIControl {
                     self.selector.frame.origin.x = startPosition
                 }
                 if buttonSelectedImages.count == 0 {
-                    btn.tintColor = selectorTextColor
+                    viewSegment.setTint(selectorTextColor)
                 }
-                btn.setTitleColor(selectorTextColor, for: .normal)
+                viewSegment.setTitleColor(selectorTextColor)
             }
         }
         let selectedImages = buttonSelectedImages.components(separatedBy: ",")
         if selectedSegmentIndex < selectedImages.count && selectedImages[selectedSegmentIndex] != "" {
             let img = UIImage(named: selectedImages[selectedSegmentIndex], in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysOriginal)
-            buttons[selectedSegmentIndex].setImage(img, for: .normal)
+            buttons[selectedSegmentIndex].setImage(img)
         }
     }
 
