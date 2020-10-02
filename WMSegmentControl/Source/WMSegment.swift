@@ -12,7 +12,13 @@ open class WMSegment: UIControl {
     public var onValueChanged: ((_ index: Int)->())?
     var buttons = [UIButton]()
     var selector: UIView!
-    public var selectedSegmentIndex: Int = 0
+    public var selectedSegmentIndex: Int = 0 {
+        didSet {
+            if oldValue != selectedSegmentIndex {
+                updateView()
+            }
+        }
+    }
     
     public var type: SegementType = .normal {
         didSet {
@@ -111,7 +117,13 @@ open class WMSegment: UIControl {
     
     public var animate: Bool = true
     
-    func updateView() {
+    open override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        updateView()
+    }
+    
+    open func updateView() {
         self.clipsToBounds = true
         buttons.removeAll()
         subviews.forEach({$0.removeFromSuperview()})
@@ -218,7 +230,7 @@ open class WMSegment: UIControl {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        updateView()
+        setupSelector()
         let _animated = self.animate
         self.animate = false
         setSelectedIndex(self.selectedSegmentIndex)
