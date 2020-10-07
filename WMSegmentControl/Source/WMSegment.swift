@@ -117,6 +117,7 @@ open class WMSegment: UIControl {
     
     public var animate: Bool = true
     
+    private var isFrameAreSet = false
     open override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -127,7 +128,8 @@ open class WMSegment: UIControl {
         self.clipsToBounds = true
         buttons.removeAll()
         subviews.forEach({$0.removeFromSuperview()})
-        
+        NotificationCenter.default.removeObserver("DeviceRotated")
+        NotificationCenter.default.addObserver(self, selector: #selector(setViewLayout), name: NSNotification.Name(rawValue: "DeviceRotated"), object: nil)
         if self.type == .normal {
             buttons = getButtonsForNormalSegment()
         }  else if self.type == .imageOnTop {
@@ -230,11 +232,19 @@ open class WMSegment: UIControl {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        setupSelector()
+        if isFrameAreSet == false {
+            setViewLayout()
+        }
+    }
+    
+    @objc open func setViewLayout() {
+        layoutIfNeeded()
+        updateView()
         let _animated = self.animate
         self.animate = false
         setSelectedIndex(self.selectedSegmentIndex)
         self.animate = _animated
+        isFrameAreSet = true
     }
     
     @objc func buttonTapped(_ sender: UIButton) {
