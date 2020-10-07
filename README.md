@@ -51,6 +51,29 @@ anotherSegment.onValueChanged = { index in
         print("selected index = \(sender.selectedSegmentIndex)")
     }
 ```
+
+### Suppoert Device rotation
+To support device rotation please add following code in appdelegate.(Due to iOS 14 issues, need some extra line of code)
+```
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+        return true
+    }
+    
+    @objc func rotated() {
+        if UIDevice.current.orientation.isLandscape {
+            print("Landscape")
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "DeviceRotated"), object: nil)
+            
+        }
+
+        if UIDevice.current.orientation.isPortrait {
+            print("Portrait")
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "DeviceRotated"), object: nil)
+        }
+    }
+```
 ### Installation
 Using CocoaPods
 
