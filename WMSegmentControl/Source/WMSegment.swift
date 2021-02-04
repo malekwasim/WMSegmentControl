@@ -12,13 +12,7 @@ open class WMSegment: UIControl {
     public var onValueChanged: ((_ index: Int)->())?
     var buttons = [UIButton]()
     var selector: UIView!
-    public var selectedSegmentIndex: Int = 0 {
-        didSet {
-            if oldValue != selectedSegmentIndex {
-                updateView()
-            }
-        }
-    }
+    public var selectedSegmentIndex: Int = 0
     
     public var type: SegementType = .normal {
         didSet {
