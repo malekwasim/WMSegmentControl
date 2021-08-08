@@ -61,6 +61,9 @@ open class WMSegment: UIControl {
     }
     
     @IBInspectable
+    public var buttonImagesSelected: String = ""
+    
+    @IBInspectable
     public var textColor: UIColor = .lightGray {
         didSet {
             updateView()
@@ -242,12 +245,22 @@ open class WMSegment: UIControl {
     }
     
     @objc func buttonTapped(_ sender: UIButton) {
-        
+        let images = self.buttonImages.components(separatedBy: ",")
+        let imagesSelected = self.buttonImagesSelected.components(separatedBy: ",")
+
         for (buttonIndex, btn) in buttons.enumerated() {
             btn.tintColor = textColor
             btn.setTitleColor(textColor, for: .normal)
             btn.titleLabel?.font = normalFont
+            
+            if let image = images[safe: buttonIndex] {
+                btn.setImage(UIImage(named: image), for: .normal)
+            }
+            
             if btn == sender {
+                if let imageSelected = imagesSelected[safe: buttonIndex] {
+                    btn.setImage(UIImage(named: imageSelected), for: .normal)
+                }
                 selectedSegmentIndex = buttonIndex
                 let startPosition = frame.width/CGFloat(buttons.count) * CGFloat(buttonIndex)
                 if self.animate {
@@ -267,11 +280,20 @@ open class WMSegment: UIControl {
     }
     //MARK: set Selected Index
     open func setSelectedIndex(_ index: Int) {
+        let images = self.buttonImages.components(separatedBy: ",")
+        let imagesSelected = self.buttonImagesSelected.components(separatedBy: ",")
+        
         for (buttonIndex, btn) in buttons.enumerated() {
             btn.tintColor = textColor
             btn.setTitleColor(textColor, for: .normal)
+            if let image = images[safe: buttonIndex] {
+                btn.setImage(UIImage(named: image), for: .normal)
+            }
             
             if btn.tag == index {
+                if let imageSelected = imagesSelected[safe: buttonIndex] {
+                    btn.setImage(UIImage(named: imageSelected), for: .normal)
+                }
                 selectedSegmentIndex = buttonIndex
                 let startPosition = frame.width/CGFloat(buttons.count) * CGFloat(buttonIndex)
                 if self.animate {
@@ -308,6 +330,13 @@ extension UIButton {
         self.imageEdgeInsets = UIEdgeInsets(top: -(titleSize.height + gap) * sign, left: 0, bottom: 0, right: -titleSize.width)
     }
 }
+
+extension Array {
+    public subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
 //MARK: Enums
 public enum SegementType: Int {
     case normal = 0, imageOnTop, onlyImage
