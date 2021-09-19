@@ -258,7 +258,7 @@ open class WMSegment: UIControl {
             }
             
             if btn == sender {
-                if let imageSelected = imagesSelected[safe: buttonIndex] {
+                if let imageSelected = imagesSelected[safe: buttonIndex], !imageSelected.isEmpty {
                     btn.setImage(UIImage(named: imageSelected), for: .normal)
                 }
                 selectedSegmentIndex = buttonIndex
@@ -291,7 +291,7 @@ open class WMSegment: UIControl {
             }
             
             if btn.tag == index {
-                if let imageSelected = imagesSelected[safe: buttonIndex] {
+                if let imageSelected = imagesSelected[safe: buttonIndex], !imageSelected.isEmpty {
                     btn.setImage(UIImage(named: imageSelected), for: .normal)
                 }
                 selectedSegmentIndex = buttonIndex
